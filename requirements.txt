@@ -1,11 +1,8 @@
 Flask==0.12.3  # CVE-2018-1000656: 디버그 모드에서 원격 코드 실행 취약점
 Django==2.2.7  # CVE-2019-14234, CVE-2019-14235: CSRF 우회 및 SQL 주입 공격 취약점
-requests==2.19.1  # CVE-2018-18074: HTTP Digest Authentication에서 중간자 공격 취약점
-PyYAML==5.3  # CVE-2017-18342: YAML 명령어 주입 취약점
 urllib3==1.24.1  # CVE-2019-11324: 중간자 공격 가능성
 jupyter==1.0.0  # CVE-2019-10255: XSRF 공격에 취약
 pillow==6.2.0  # CVE-2019-16865: 버퍼 오버플로우 취약점
-
 
 # API에 사용된 취약한 라이브러리 (Reachable)
 PyYAML==5.3                                            # CVE-2017-18342: PyYAML 5.3 취약점 (명령어 주입 취약점)
