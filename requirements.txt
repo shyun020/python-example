@@ -1,4 +1,4 @@
-request
+requests
 
 Flask==0.12.3  # CVE-2018-1000656: 디버그 모드에서 원격 코드 실행 취약점
 Django==2.2.7  # CVE-2019-14234, CVE-2019-14235: CSRF 우회 및 SQL 주입 공격 취약점
