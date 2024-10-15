@@ -5,4 +5,4 @@ jupyter==1.0.0  # CVE-2019-10255: XSRF 공격에 취약
 pillow==6.2.0  # CVE-2019-16865: 버퍼 오버플로우 취약점
 
 # API에 사용된 취약한 라이브러리 (Reachable)
-PyYAML==5.3                                            # CVE-2017-18342: PyYAML 5.3 취약점 (명령어 주입 취약점)
+PyYAML==5.3                                            
