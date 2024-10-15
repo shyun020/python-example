@@ -1,12 +1,5 @@
 # Flask
 flask
 
-# 취약한 라이브러리 테스트
-log4j-core==2.14.1                                     # CVE-2021-44228: 원격 코드 실행 취약점 (Log4Shell)
-com.fasterxml.jackson.core:jackson-databind==2.9.10.6  # CVE-2020-25649: 역직렬화로 인한 원격 코드 실행
-org.springframework:spring-core==5.3.16                # CVE-2022-22965: 원격 코드 실행 취약점 (Spring4Shell)
-org.apache.tomcat.embed:tomcat-embed-core==9.0.27      # CVE-2020-9484: 세션 재사용으로 인한 원격 코드 실행
-Django==2.2.24                                         # CVE-2021-33203: SQL 인젝션 취약점
-
 # API에 사용된 취약한 라이브러리 (Reachable)
 PyYAML==5.3                                            # CVE-2017-18342: PyYAML 5.3 취약점 (명령어 주입 취약점)
