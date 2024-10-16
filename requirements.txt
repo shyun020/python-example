@@ -1,10 +1,10 @@
 requests
+ 
+Django==3.2.19  
+urllib3==1.25.11  
+jupyter==1.0.0  
+pillow==8.2.0  
 
-Flask==1.0.4  # CVE-2018-1000656 패치됨
-Django==2.2.24  # CVE-2019-14234, CVE-2019-14235 패치됨
-urllib3==1.25.11  # CVE-2019-11324 패치됨
-jupyter==1.0.0  # XSRF 관련 취약점 여전히 존재
-pillow==7.0.0  # CVE-2019-16865 패치됨
 
 # API에 사용된 취약한 라이브러리 (Reachable)
 PyYAML==5.3                                            
