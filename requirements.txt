@@ -5,7 +5,7 @@ urllib3==1.25.11
 jupyter==1.0.0  
 pillow==8.5.0
 urllib3==1.24.1
-SQLAlchemy
+SQLAlchemy==2.0.19
 celery
 pytest
 matplotlib
