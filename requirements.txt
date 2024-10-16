@@ -3,8 +3,11 @@ requests
 Django==3.2.19  
 urllib3==1.25.11  
 jupyter==1.0.0  
-pillow==8.2.0  
-
+pillow==8.3.0
+SQLAlchemy
+celery
+pytest
+matplotlib
 
 # API에 사용된 취약한 라이브러리 (Reachable)
 PyYAML==5.3                                            
