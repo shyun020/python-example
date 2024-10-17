@@ -11,3 +11,6 @@ matplotlib==3.7.0
 
 # API에 사용된 취약한 라이브러리 (Reachable)
 PyYAML==5.3                                            
+Markdown==3.1.1
+lxml==4.6.3
+MarkupSafe==2.0.1
