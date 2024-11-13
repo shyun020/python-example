@@ -6,8 +6,8 @@ lxml==4.6.3
 numppy
 
 # 취약한 라이센스
-raise-utils==1.6.0
-ifcopenshel==0.8.0
+d8s-networking
+requestspool
 
 requests
 flask
