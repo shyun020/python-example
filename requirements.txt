@@ -7,7 +7,6 @@ numppy
 
 # 취약한 라이센스
 d8s-networking
-requestspool
 
 requests
 flask
