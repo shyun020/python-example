@@ -6,7 +6,7 @@ lxml==4.6.3
 numppy
 
 # 취약한 라이센스
-d8s-networking
+postpanda-helper==1.2.1
 
 requests
 flask
