@@ -1,5 +1,17 @@
+# API에 사용된 취약한 라이브러리 (Reachable)
+PyYAML==5.3                                            
+lxml==4.6.3
+
+# 타이포스쿼팅 의심 패키지
+
+
 requests
- 
+flask
+beautifulsoup4
+pymssql
+
+Markdown==3.1.1
+MarkupSafe==2.0.1
 Django==3.2.19  
 urllib3==1.25.11  
 jupyter==1.0.0  
@@ -8,10 +20,3 @@ SQLAlchemy==2.0.19
 pytest==7.3.1
 celery==2.5.0
 matplotlib==3.7.0
-
-##11#
-# API에 사용된 취약한 라이브러리 (Reachable)
-PyYAML==5.3                                            
-Markdown==3.1.1
-lxml==4.6.3
-MarkupSafe==2.0.1
