@@ -5,10 +5,12 @@ lxml==4.6.3
 # 타이포스쿼팅 의심 패키지
 numppy
 
+# 취약한 라이센스
+raise-utils==1.6.0
+
 requests
 flask
 beautifulsoup4
-pymssql
 
 MarkupSafe==2.0.1
 Markdown==3.1.1
