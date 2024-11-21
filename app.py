@@ -114,14 +114,23 @@ def vulnerable_yaml():
 # markdown == 3.1.1
 # POC : curl "http://127.0.0.1/markdown?content=<script>alert('XSS')</script>"
 # sink parsing : vulnerable_markdown / markdown / markdown
-@app.route('/markdown', methods=['GET'])
-def vulnerable_markdown():
+#@app.route('/markdown', methods=['GET'])
+#def vulnerable_markdown():
     # GET 요청의 'content' 파라미터로 전달된 마크다운 형식의 데이터를 가져옴, 기본값은 빈 문자열
-    content = request.args.get('content', '')
+    #content = request.args.get('content', '')
     # 전달된 마크다운 데이터를 HTML로 변환
-    html_output = markdown.markdown(content)
+    #html_output = markdown.markdown(content)
     # 변환된 HTML을 그대로 출력
-    return Markup(html_output)
+    #return Markup(html_output)
+
+@app.route('/markdown', methods=['GET'])
+def vulnerable_markupsafe():
+    # GET 요청의 'content' 파라미터로 전달된 데이터를 가져옴, 기본값은 빈 문자열
+    content = request.args.get('content', '')
+    # 사용자 입력 데이터를 Markup 객체로 래핑
+    unsafe_output = Markup(content)
+    # 변환된 HTML을 그대로 출력
+    return unsafe_output
 
 # lxml
 # POC : curl "http://127.0.0.1/parse_xml?data=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%0A%3C%21DOCTYPE+root+%5B%0A++%3C%21ELEMENT+root+ANY+%3E%0A++%3C%21ENTITY+xxe+SYSTEM+%22file%3A%2F%2F%2Fetc%2Fpasswd%22+%3E%5D%3E%0A%3Croot%3E%26xxe%3B%3C%2Froot%3E"
