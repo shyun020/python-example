@@ -123,7 +123,7 @@ def vulnerable_markdown():
     # 변환된 HTML을 그대로 출력
     return Markup(html_output)
 
-@app.route('/markdown', methods=['GET'])
+@app.route('/markup', methods=['GET'])
 def vulnerable_markupsafe():
     # GET 요청의 'content' 파라미터로 전달된 데이터를 가져옴, 기본값은 빈 문자열
     content = request.args.get('content', '')
